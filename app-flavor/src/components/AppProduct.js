@@ -1,5 +1,8 @@
 import "./AppProduct.css";
 import axios from "axios";
+import { useState, useEffect, useCallback } from "react";
+import { Stack, Form, Button } from "react-bootstrap";
+import { isEmpty } from "lodash";
 
 const toKen = "Bearer " + localStorage.getItem("jwtToken");
 const apiKey = localStorage.getItem("x-api-key");
@@ -9,32 +12,47 @@ const contentAppicationJSON = "application/json";
 const headers = {
   "Content-Type": contentAppicationJSON,
   Authorization: toKen,
-  "X-API-KEY": apiKey
+  "X-API-KEY": apiKey,
 };
 
-const fetchAllProduct = async () => {
-    try {
-        const queryParams = {
-            page: 1,
-            per_page: 10
-        };
-        const resp = await axios.get(endPoint,{headers, params: queryParams});
-        console.log(resp.data);
-    }
-    catch (err) {
-        console.error(err)
-    }
-}
-
 function Product() {
+  const [products, setProducts] = useState([]);
+  const [query, setQuery] = useState('');
+
+  const fetchAllProduct = useCallback(async () => {
+    try {
+      const queryParams = {
+        page: 1,
+        per_page: 10,
+        search_word: ""
+      };
+      // ทำการ Check query search_word ว่ามีไหม
+      const search = query ? `${query}` : "";
+      queryParams.search_word = search; // set search in queryParams
+
+      const resp = await axios.get(endPoint, { headers, params: queryParams });
+      setProducts(resp.data);
+    } catch (err) {
+      console.error(err);
+    }
+  }, [query]);
+
+  useEffect(() => {
+    fetchAllProduct();
+  }, [fetchAllProduct]);
+
   return (
-      <div className="product-body">
-        Product Page
-        <div>
-            <button className="button-fetch" type="button" onClick={fetchAllProduct}>get data</button>
-        </div>
-      </div>
-       
+    <div className="product-body">
+      <Stack direction="horizontal" gap={3}>
+        <Form.Control placeholder="Search Product" onChange={(e) => {setQuery(e.target.value)}}></Form.Control>
+        <Button onClick={fetchAllProduct}>Search</Button>
+      </Stack>
+      { isEmpty(products) ? <div className="py-2">
+        Product Not Found.
+      </div> : <div>
+        Have Product.
+      </div>}
+    </div>
   );
 }
 

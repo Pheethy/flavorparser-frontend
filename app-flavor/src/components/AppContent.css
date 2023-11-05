@@ -11,7 +11,7 @@
 }
 
 .button-product {
-  font-family: 'Roboto Slab', serif;
+  font-family: 'Oswald', sans-serif;
   color: white;
   background-color: darkorchid;
   padding: 10px;
@@ -35,7 +35,7 @@
 }
 
 .app-main-title {
-  font-family: 'Roboto Slab', serif;
+  font-family: 'Oswald', sans-serif;
     font-weight: 50;
     font-size: 20px;
     color: #fff;
