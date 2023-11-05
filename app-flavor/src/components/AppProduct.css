@@ -1,0 +1,24 @@
+.product-body {
+  display: flex;
+  background-color: #393646;
+  height: 100vh;
+  width: 100%;
+  color: azure;
+}
+
+.button-fetch {
+  font-family: "Roboto Slab", serif;
+  color: white;
+  background-color: darkorchid;
+  padding: 10px;
+  margin-bottom: 50px;
+  border-radius: 5px;
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+}
+
+.button-fetch:hover {
+    background-color: pink;
+    color: #fff;
+}
