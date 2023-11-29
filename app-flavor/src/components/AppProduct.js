@@ -5,23 +5,25 @@ import { Stack, Form, Row } from "react-bootstrap";
 import { isEmpty } from "lodash";
 import AppProductItem from "./AppProductItem";
 
-const toKen = "Bearer " + localStorage.getItem("jwtToken");
-const apiKey = localStorage.getItem("x-api-key");
+
 const endPoint = `${process.env.REACT_APP_GO_API}/product`;
 const contentAppicationJSON = "application/json";
 
-const headers = {
-  "Content-Type": contentAppicationJSON,
-  Authorization: toKen,
-  "X-API-KEY": apiKey,
-};
+
 
 function Product() {
   const [products, setProducts] = useState([]);
   const [query, setQuery] = useState('');
-
+  
   const fetchAllProduct = useCallback(async () => {
     try {
+      const toKen = "Bearer " + localStorage.getItem("jwtToken");
+      const apiKey = localStorage.getItem("x-api-key");
+      const headers = {
+        "Content-Type": contentAppicationJSON,
+        Authorization: toKen,
+        "X-API-KEY": apiKey,
+      };
       const queryParams = {
         page: 1,
         per_page: 10,

@@ -42,7 +42,7 @@ function LogIn() {
             Authorization: token,
           };
 
-          const resp = await axios.get("http://localhost:8080/info/apikey", {
+          const resp = await axios.get(`${process.env.REACT_APP_GO_API}/info/apikey`, {
             headers,
           });
 
